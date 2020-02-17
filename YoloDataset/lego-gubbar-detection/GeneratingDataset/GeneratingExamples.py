@@ -36,22 +36,22 @@ DESTINATION_DIR = "GeneratingDataset/GeneratedImagesXml"
 backgroundShape = (224,224)
 minSize = 32
 maxSize = 112
-imageStart = 0
-itterations = 25
+imageStart = 1000
+itterations = 1500
 maxCharactersAllowed = 5
 total = imageStart
 
 for i in range(itterations):
 
     charactersOnCanvas = []
-    backgroundDir = "Get Images/BackgroundImages/"+random.choice(os.listdir("C:/Users/s8simoga/Desktop/YoloDataset/lego-gubbar-detection/Get Images/BackgroundImages/"))
+    backgroundDir = "Get Images/BackgroundImages/"+random.choice(os.listdir("C:/Users/s8simoga/Documents/GitHub/Livindead3/YoloDatasetCreator/YoloDataset/lego-gubbar-detection/Get Images/BackgroundImages"))
     imgBackground = cv2.cvtColor(cv2.imread(backgroundDir), cv2.COLOR_RGB2RGBA)
     resizedBackground = cv2.resize(imgBackground, backgroundShape)
 
     charactersAmount = random.randint(1,maxCharactersAllowed)
     for amounts in range(charactersAmount):
         skip = False
-        characterDir = "Edit Characters/ImagesNoBackground/"+random.choice(os.listdir("C:/Users/s8simoga/Desktop/YoloDataset/lego-gubbar-detection/Edit Characters/ImagesNoBackground/"))
+        characterDir = "Edit Characters/FramesNoBackground/"+random.choice(os.listdir("C:/Users/s8simoga/Documents/GitHub/Livindead3/YoloDatasetCreator/YoloDataset/lego-gubbar-detection/Edit Characters/FramesNoBackground/"))
         imgCharacter = cv2.imread(characterDir, cv2.IMREAD_UNCHANGED)
 
         rotation = random.randint(0,360)
