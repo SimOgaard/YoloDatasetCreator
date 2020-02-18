@@ -36,8 +36,8 @@ DESTINATION_DIR = "GeneratingDataset/GeneratedImagesXml"
 backgroundShape = (224,224)
 minSize = 32
 maxSize = 112
-imageStart = 2500
-itterations = 25
+imageStart = 0
+itterations = 5000
 maxCharactersAllowed = 5
 total = imageStart
 

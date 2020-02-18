@@ -2,18 +2,18 @@ import cv2
 import numpy as np
 from PIL import Image
 import glob
-# import os
+import os
 
 MASK_COLOR = (0,0,0,0)
 
 hMin = 0
-sMin = 54 # 61
+sMin = 0 # 61
 vMin = 0
-hMax = 255
+hMax = 40
 sMax = 255
 vMax = 255
-MASK_DILATE_ITER = 11
-MASK_ERODE_ITER = 10
+MASK_DILATE_ITER = 12
+MASK_ERODE_ITER = 12
 BLUR = 9
 KERNEL = np.ones((5,5), np.uint8)
 
