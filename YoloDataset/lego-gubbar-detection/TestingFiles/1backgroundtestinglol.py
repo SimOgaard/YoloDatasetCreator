@@ -19,114 +19,120 @@ cv2.createTrackbar('vMax','max',255,255,nothing)
 cv2.createTrackbar('DILATE','filter',11,100,nothing)
 cv2.createTrackbar('ERODE','filter',9,100,nothing)
 cv2.createTrackbar('BLUR','filter',9,100,nothing)
-# BLURHSV = 19
+cv2.createTrackbar('Kernel','filter',5,100,nothing)
 
 img = cv2.imread("Get Images/Images/gays.PNG")
 
+# b,g,r = cv2.split(cv2.cvtColor(img, cv2.COLOR_BGR2HSV))
+# hist = cv2.calcHist([cv2.cvtColor(img, cv2.COLOR_BGR2HSV)], [0], None, [256], [0, 256])
+# plt.plot(hist)
 
+# plt.hist(r.ravel(), 256, [0,256])
+# plt.hist(g.ravel(), 256, [0,256])
+# plt.hist(b.ravel(), 256, [0,256])
 
-b,g,r = cv2.split(cv2.cvtColor(img, cv2.COLOR_BGR2HSV))
-hist = cv2.calcHist([cv2.cvtColor(img, cv2.COLOR_BGR2HSV)], [0], None, [256], [0, 256])
-plt.plot(hist)
-
-# cv2.imshow("img", img)
-plt.hist(r.ravel(), 256, [0,256])
-plt.hist(g.ravel(), 256, [0,256])
-plt.hist(b.ravel(), 256, [0,256])
-
-# plt.hist(img.ravel(), 256, [0,256])
-# plt.show()
-
-
-# for image in glob.glob("Get Images/Images/*.PNG"):
 while True:
-    
-    # img = cv2.imread(image)
     
     MASK_DILATE_ITER = int(cv2.getTrackbarPos('DILATE','filter'))
     MASK_ERODE_ITER = int(cv2.getTrackbarPos('ERODE','filter'))
     BLUR = int(cv2.getTrackbarPos('BLUR','filter'))
-    # Load in the image using the typical imread function using our watch_folder path, and the fileName passed in, then set the final output image to our current image for now
-    
-    output = img
-    # Set thresholds. Here, we are using the Hue, Saturation, Value color space model. We will be using these values to decide what values to show in the ranges using a minimum and maximum value.  THESE VALUES CAN BE PLAYED AROUND FOR DIFFERENT COLORS
-    hMin = int(cv2.getTrackbarPos('hMin','min'))  # Hue minimum
-    sMin = int(cv2.getTrackbarPos('sMin','min'))  # Saturation minimum
-    vMin = int(cv2.getTrackbarPos('vMin','min'))   # Value minimum (Also referred to as brightness)
-    hMax = int(cv2.getTrackbarPos('hMax','max')) # Hue maximum
-    sMax = int(cv2.getTrackbarPos('sMax','max')) # Saturation maximum
-    vMax = int(cv2.getTrackbarPos('vMax','max')) # Value maximum
-    # Set the minimum and max HSV values to display in the output image using numpys' array function. We need the numpy array since OpenCVs' inRange function will use those.
+    hMin = int(cv2.getTrackbarPos('hMin','min')) 
+    sMin = int(cv2.getTrackbarPos('sMin','min')) 
+    vMin = int(cv2.getTrackbarPos('vMin','min')) 
+    hMax = int(cv2.getTrackbarPos('hMax','max')) 
+    sMax = int(cv2.getTrackbarPos('sMax','max')) 
+    vMax = int(cv2.getTrackbarPos('vMax','max')) 
     lower = np.array([hMin, sMin, vMin])
     upper = np.array([hMax, sMax, vMax])
+    KERNEL = np.ones((int(cv2.getTrackbarPos('Kernel','filter')) ,int(cv2.getTrackbarPos('Kernel','filter'))), np.uint8)
+
+    # rgb_planes = cv2.split(img)
+    # result_planes = []
+    # result_norm_planes = []
+    # for plane in rgb_planes:
+    #     dilated_img = cv2.dilate(plane, np.ones((39,39), np.uint8))
+    #     bg_img = cv2.medianBlur(dilated_img, 71)
+    #     diff_img = 255 - cv2.absdiff(plane, bg_img)
+    #     norm_img = cv2.normalize(diff_img,None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_8UC1)
+    #     result_planes.append(diff_img)
+    #     result_norm_planes.append(norm_img)
+    # result = cv2.merge(result_planes)
+    # result_norm = cv2.merge(result_norm_planes)
+
+    # cv2.imshow('shadows_out.png', result)
+    # cv2.imshow('shadows_out_norm.png', result_norm)
+
+    # gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+    # kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (39,39))
+    # dialated = cv2.morphologyEx(gray, cv2.MORPH_DILATE, kernel)
+    # diff1 = 255-cv2.subtract(dialated, gray)
+
+    # median = cv2.medianBlur(dialated, 71)
+    # diff2 = 255- cv2.subtract(median, gray)
+
+    # normed = cv2.normalize(diff2,None,0,255,cv2.NORM_MINMAX)
+
+    # cv2.imshow("normed",normed)
+    # cv2.imshow("diff1",diff1)
+    # cv2.imshow("diff2",diff2)
+    # cv2.imshow("dialated",dialated)
+    # cv2.imshow("median",median)
+
+    # hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+
+    # cv2.imshow("lamao",hsv)
+
+    # mask = cv2.inRange(hsv, lower, upper)
+    # mask = cv2.dilate(mask, None, iterations=MASK_DILATE_ITER)
+    # mask = cv2.erode(mask, None, iterations=MASK_ERODE_ITER)
+    # mask = cv2.GaussianBlur(mask, (BLUR, BLUR), 0)
+        
+    # output = cv2.bitwise_and(img, img, mask=mask)
+    # *_, alpha = cv2.split(output)
+    # dst = cv2.merge((output, alpha))
+    # output = dst
+   
+    # cv2.imshow("lol",output)
 
 
-    rgb_planes = cv2.split(img)
+    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
-    result_planes = []
-    result_norm_planes = []
-    for plane in rgb_planes:
-        dilated_img = cv2.dilate(plane, np.ones((39,39), np.uint8))
-        bg_img = cv2.medianBlur(dilated_img, 71)
-        diff_img = 255 - cv2.absdiff(plane, bg_img)
-        norm_img = cv2.normalize(diff_img,None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_8UC1)
-        result_planes.append(diff_img)
-        result_norm_planes.append(norm_img)
-
-    result = cv2.merge(result_planes)
-    result_norm = cv2.merge(result_norm_planes)
-
-    cv2.imshow('shadows_out.png', result)
-    cv2.imshow('shadows_out_norm.png', result_norm)
-
-
-
-    gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (39,39))
-    dialated = cv2.morphologyEx(gray, cv2.MORPH_DILATE, kernel)
-    diff1 = 255-cv2.subtract(dialated, gray)
-
-    median = cv2.medianBlur(dialated, 71)
-    diff2 = 255- cv2.subtract(median, gray)
-
-    normed = cv2.normalize(diff2,None,0,255,cv2.NORM_MINMAX)
-
-    cv2.imshow("normed",normed)
-    cv2.imshow("diff1",diff1)
-    cv2.imshow("diff2",diff2)
-    cv2.imshow("dialated",dialated)
-    cv2.imshow("median",median)
-
-    # Create HSV Image and threshold it into the proper range.
-    hsv = cv2.cvtColor(result_norm, cv2.COLOR_BGR2HSV) # Converting color space from BGR to HSV
-    # cv2.GaussianBlur(hsv, (BLURHSV, BLURHSV), 0)
-    cv2.imshow("lamao",hsv)
-    mask = cv2.inRange(hsv, lower, upper) # Create a mask based on the lower and upper range, using the new HSV image
+    mask = cv2.inRange(hsv, lower, upper)
     mask = cv2.dilate(mask, None, iterations=MASK_DILATE_ITER)
     mask = cv2.erode(mask, None, iterations=MASK_ERODE_ITER)
+    mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, KERNEL, iterations=2)
     mask = cv2.GaussianBlur(mask, (BLUR, BLUR), 0)
-        
-    # Create the output image, using the mask created above. This will perform the removal of all unneeded colors, but will keep a black background.
-    output = cv2.bitwise_and(img, img, mask=mask)
-    # Add an alpha channel, and update the output image variable
-    *_, alpha = cv2.split(output)
-    dst = cv2.merge((output, alpha))
-    output = dst
-    # Resize the image to 512, 512 (This can be put into a variable for more flexibility), and update the output image variable.
-    #   dim = (512, 512)
-    #   output = cv2.resize(output, dim)
-    # Generate a random file name using a mini helper function called randomString to write the image data to, and then save it in the processed_folder path, using the generated filename.
-    #   cv2.imwrite(processed_folder + "/" + fileName, output)
-    cv2.imshow("lol",output)
-    # cv2.waitKey(0)
-    # cv2.destroyAllWindows()
-    # processImage("Get Images/Images/00000003.jpg")
+
+    edges = cv2.Canny(mask, 0, 255)
+    edges = cv2.dilate(edges, None)
+    edges = cv2.erode(edges, None)
+
+    contour_info = []
+    contours, _ = cv2.findContours(edges, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)
+
+    for c in contours:
+        contour_info.append((
+            c,
+            cv2.isContourConvex(c),
+            cv2.contourArea(c),
+        ))
+
+    contour_info = sorted(contour_info, key=lambda c: c[2], reverse=True)
+    max_contour = contour_info[0]
+
+    mask = np.zeros(edges.shape)
+
+    cv2.drawContours(mask, [max_contour[0]],-1, 255, -1)
+
+    mask_stack = np.dstack([mask]*4)
+    mask_stack  = mask_stack.astype('float') / 255.0 
+    newimg = cv2.multiply(mask_stack, cv2.cvtColor(img, cv2.COLOR_BGR2BGRA).astype("float")/255)
+
+    cv2.imshow("newimg",newimg)
+
     k = cv2.waitKey()
     if k==27:
         break
-    # elif k==-1:
-    #     continue
-# img = cv2.imread(image)
 
 cv2.destroyAllWindows()
 
