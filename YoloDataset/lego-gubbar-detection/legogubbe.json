@@ -3,26 +3,26 @@
         "architecture":         "MobileNet",
         "input_size":           224,
         "anchors":              [0.57273, 0.677385, 1.87446, 2.06253, 3.33843, 5.47434, 7.88282, 3.52778, 9.77052, 9.16828],
-        "labels":               ["Legogubbe"],
+        "labels":               ["lego gubbe"],
         "coord_scale" : 		1.0,
         "class_scale" : 		1.0,
         "object_scale" : 		5.0,
         "no_object_scale" : 	1.0
     },
     "pretrained" : {
-        "full":   				"/content/Yolo-digit-detector/save-files/model.h5"
+        "full":   				"/content/Yolo-digit-detector/raccoon/model.h5"
     },
     "train" : {
         "actual_epoch":         20,
-        "train_image_folder":   "/content/Lego-dataset/images",
-        "train_annot_folder":   "/content/Lego-dataset/annotations_xml",
+        "train_image_folder":   "/content/Yolo-digit-detector/YoloDatasetCreator/YoloDataset/lego-gubbar-detection/GeneratingDataset/GeneratedImages",
+        "train_annot_folder":   "/content/Yolo-digit-detector/YoloDatasetCreator/YoloDataset/lego-gubbar-detection/GeneratingDataset/GeneratedImagesXml",
         "train_times":          2,
-        "valid_image_folder":   "/content/Lego-dataset/testing_images",
-        "valid_annot_folder":   "/content/Lego-dataset/testing_annotations_xml",
+        "valid_image_folder":   "/content/Yolo-digit-detector/YoloDatasetCreator/YoloDataset/lego-gubbar-detection/GeneratingDataset/GeneratedImages",
+        "valid_annot_folder":   "/content/Yolo-digit-detector/YoloDatasetCreator/YoloDataset/lego-gubbar-detection/GeneratingDataset/GeneratedImagesXml",
         "valid_times":          2,
         "batch_size":           4,
         "learning_rate":        1e-4,
-        "saved_folder":   		"/content/Yolo-digit-detector//save-files",
+        "saved_folder":   		"/content/Yolo-digit-detector/raccoon",
         "first_trainable_layer": "",
         "jitter":				true,
         "is_only_detect" : 		false
