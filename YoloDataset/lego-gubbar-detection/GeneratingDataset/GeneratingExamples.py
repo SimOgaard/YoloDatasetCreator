@@ -60,12 +60,9 @@ for i in range(itterations):
     backgroundDir = "/content/Yolo-digit-detector/YoloDatasetCreator/YoloDataset/lego-gubbar-detection/Get Images/BackgroundImages/"+random.choice(os.listdir("/content/Yolo-digit-detector/YoloDatasetCreator/YoloDataset/lego-gubbar-detection/Get Images/BackgroundImages"))
     imgBackground = cv2.cvtColor(cv2.imread(backgroundDir), cv2.COLOR_RGB2RGBA)
 
-    try:
-        resizedBackground = cv2.resize(imgBackground, (random.randint(minBackgroundSize,maxBackgroundSize),random.randint(minBackgroundSize,maxBackgroundSize)))
-    except:
-        resizedBackground = cv2.resize(imgBackground, (minBackgroundSize,minBackgroundSize))
+    resizedBackground = cv2.resize(imgBackground, (random.randint(minBackgroundSize, maxBackgroundSize), random.randint(minBackgroundSize, maxBackgroundSize)))
 
-    charactersAmount = random.randint(1,maxCharactersAllowed)
+    charactersAmount = random.randint(1, maxCharactersAllowed)
     for amounts in range(charactersAmount):
         skip = False
         characterDir = "/content/Yolo-digit-detector/YoloDatasetCreator/YoloDataset/lego-gubbar-detection/Edit Characters/FramesNoBackground/"+random.choice(os.listdir("/content/Yolo-digit-detector/YoloDatasetCreator/YoloDataset/lego-gubbar-detection/Edit Characters/FramesNoBackground"))
@@ -80,8 +77,8 @@ for i in range(itterations):
         scalePercent = random.randint(minScale, maxScale)
         resizedCharacter = cv2.resize(rotatedCharacter, (int(rotatedCharacter.shape[1]*scalePercent/100),int(rotatedCharacter.shape[0]*scalePercent/100)))
 
-        y_offset = random.randint(0,resizedBackground.shape[0]-resizedCharacter.shape[0])
-        x_offset = random.randint(0,resizedBackground.shape[1]-resizedCharacter.shape[1])
+        y_offset = random.randint(0, resizedBackground.shape[0]-resizedCharacter.shape[0])
+        x_offset = random.randint(0, resizedBackground.shape[1]-resizedCharacter.shape[1])
         y1, y2 = y_offset, y_offset + resizedCharacter.shape[0]
         x1, x2 = x_offset, x_offset + resizedCharacter.shape[1]
 
@@ -101,7 +98,7 @@ for i in range(itterations):
         for c in range(0, 3):
             resizedBackground[y1:y2, x1:x2, c] = (alpha_s * resizedCharacter[:, :, c] + alpha_l * resizedBackground[y1:y2, x1:x2, c])
 
-        charactersOnCanvas.append(["lego gubbe",x1, y1, x2, y2])
+        charactersOnCanvas.append(["lego gubbe", x1, y1, x2, y2])
 
     file_prefix = str(total).zfill(8)
     root = create_root(file_prefix, resizedBackground.shape[0], resizedBackground.shape[1])
@@ -109,8 +106,8 @@ for i in range(itterations):
     tree = ET.ElementTree(root) 
     tree.write("{}/{}.xml".format(DESTINATION_DIR, file_prefix))
 
-    gauss = np.random.normal(0,random.randint(0,250)/1000,resizedBackground.size)
-    gauss = gauss.reshape(resizedBackground.shape[0],resizedBackground.shape[1],resizedBackground.shape[2]).astype('uint8')
+    gauss = np.random.normal(0, random.randint(0,250)/1000,resizedBackground.size)
+    gauss = gauss.reshape(resizedBackground.shape[0], resizedBackground.shape[1], resizedBackground.shape[2]).astype('uint8')
     noise = (resizedBackground + resizedBackground * gauss) # * (random.randint(10,50)/10000)
 
     # cv2.imshow('noise', noise)
