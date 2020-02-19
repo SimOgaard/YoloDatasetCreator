@@ -4,6 +4,17 @@ import os
 import random
 import numpy as np
 import xml.etree.cElementTree as ET
+import argparse
+
+ap = argparse.ArgumentParser()
+ap.add_argument("-m", "--minBackgroundSize", required=True)
+ap.add_argument("-M", "--maxBackgroundSize", required=True)
+ap.add_argument("-s", "--minSize", required=True)
+ap.add_argument("-S", "--maxSize", required=True)
+ap.add_argument("-i", "--imageStart", required=True)
+ap.add_argument("-t", "--itterations", required=True)
+ap.add_argument("-c", "--maxCharactersAllowed", required=True)
+args = vars(ap.parse_args())
 
 def create_root(file_prefix, width, height):
     root = ET.Element("annotations")
@@ -29,27 +40,32 @@ def create_object_annotation(root, voc_labels):
         ET.SubElement(bbox, "ymax").text = str(voc_label[4])
     return root
 
-DESTINATION_DIR = "GeneratingDataset/GeneratedImagesXml"
+DESTINATION_DIR = "/content/Yolo-digit-detector/YoloDatasetCreator/YoloDataset/lego-gubbar-detection/GeneratingDataset/GeneratedImagesXml"
 
-backgroundShape = (224,224)
-minSize = 32
-maxSize = 112
-imageStart = 0
-itterations = 10000
-maxCharactersAllowed = 5
+minBackgroundSize = args["minBackgroundSize"]
+maxBackgroundSize = args["maxBackgroundSize"]
+minSize = args["minSize"]
+maxSize = args["maxSize"]
+imageStart = args["imageStart"]
+itterations = args["itterations"]
+maxCharactersAllowed = args["maxCharactersAllowed"]
 total = imageStart
 
 for i in range(itterations):
 
     charactersOnCanvas = []
-    backgroundDir = "Get Images/BackgroundImages/"+random.choice(os.listdir("C:/Users/s8simoga/Documents/GitHub/Livindead3/YoloDatasetCreator/YoloDataset/lego-gubbar-detection/Get Images/BackgroundImages"))
+    backgroundDir = "/content/Yolo-digit-detector/YoloDatasetCreator/YoloDataset/lego-gubbar-detection/Get Images/BackgroundImages/"+random.choice(os.listdir("/content/Yolo-digit-detector/YoloDatasetCreator/YoloDataset/lego-gubbar-detection/Get Images/BackgroundImages"))
     imgBackground = cv2.cvtColor(cv2.imread(backgroundDir), cv2.COLOR_RGB2RGBA)
-    resizedBackground = cv2.resize(imgBackground, backgroundShape)
+
+    try:
+        resizedBackground = cv2.resize(imgBackground, (random.randint(minBackgroundSize[0],maxBackgroundSize[0]),random.randint(minBackgroundSize[1],maxBackgroundSize[1])))
+    except:
+        resizedBackground = cv2.resize(imgBackground, minBackgroundSize)
 
     charactersAmount = random.randint(1,maxCharactersAllowed)
     for amounts in range(charactersAmount):
         skip = False
-        characterDir = "Edit Characters/FramesNoBackground/"+random.choice(os.listdir("C:/Users/s8simoga/Documents/GitHub/Livindead3/YoloDatasetCreator/YoloDataset/lego-gubbar-detection/Edit Characters/FramesNoBackground/"))
+        characterDir = "/content/Yolo-digit-detector/YoloDatasetCreator/YoloDataset/lego-gubbar-detection/Edit Characters/FramesNoBackground/"+random.choice(os.listdir("/content/Yolo-digit-detector/YoloDatasetCreator/YoloDataset/lego-gubbar-detection/Edit Characters/FramesNoBackground"))
         imgCharacter = cv2.imread(characterDir, cv2.IMREAD_UNCHANGED)
 
         rotation = random.randint(0,360)
@@ -100,7 +116,7 @@ for i in range(itterations):
     #     break
 
     # cv2.imwrite("GeneratingDataset/GeneratedImages/"+"{}.JPEG".format(str(total).zfill(8)), resizedBackground)
-    cv2.imwrite("GeneratingDataset/GeneratedImages/"+"{}.JPEG".format(file_prefix), noise)
+    cv2.imwrite("/content/Yolo-digit-detector/YoloDatasetCreator/YoloDataset/lego-gubbar-detection/GeneratingDataset/GeneratedImages/"+"{}.JPEG".format(file_prefix), noise)
     total+=1
 
 cv2.destroyAllWindows()
