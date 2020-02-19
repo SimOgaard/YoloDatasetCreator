@@ -77,8 +77,8 @@ for i in range(itterations):
         scalePercent = random.randint(minScale, maxScale)
         resizedCharacter = cv2.resize(rotatedCharacter, (int(rotatedCharacter.shape[1]*scalePercent/100),int(rotatedCharacter.shape[0]*scalePercent/100)))
 
-        y_offset = random.randint(0,backgroundShape[1]-resizedCharacter.shape[0])
-        x_offset = random.randint(0,backgroundShape[0]-resizedCharacter.shape[1])
+        y_offset = random.randint(0,resizedBackground.shape[0]-resizedCharacter.shape[0])
+        x_offset = random.randint(0,resizedBackground.shape[1]-resizedCharacter.shape[1])
         y1, y2 = y_offset, y_offset + resizedCharacter.shape[0]
         x1, x2 = x_offset, x_offset + resizedCharacter.shape[1]
 
@@ -101,7 +101,7 @@ for i in range(itterations):
         charactersOnCanvas.append(["lego gubbe",x1, y1, x2, y2])
 
     file_prefix = str(total).zfill(8)
-    root = create_root(file_prefix, backgroundShape[0], backgroundShape[1])
+    root = create_root(file_prefix, resizedBackground.shape[0], resizedBackground.shape[1])
     root = create_object_annotation(root, charactersOnCanvas)
     tree = ET.ElementTree(root) 
     tree.write("{}/{}.xml".format(DESTINATION_DIR, file_prefix))
