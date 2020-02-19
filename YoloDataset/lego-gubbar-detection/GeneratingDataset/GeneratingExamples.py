@@ -9,8 +9,8 @@ import argparse
 ap = argparse.ArgumentParser()
 ap.add_argument("-m", "--minBackgroundSize", required=True)
 ap.add_argument("-M", "--maxBackgroundSize", required=True)
-ap.add_argument("-s", "--minSize", required=True)
-ap.add_argument("-S", "--maxSize", required=True)
+ap.add_argument("-s", "--minCharacterSize", required=True)
+ap.add_argument("-S", "--maxCharacterSize", required=True)
 ap.add_argument("-i", "--imageStart", required=True)
 ap.add_argument("-t", "--itterations", required=True)
 ap.add_argument("-c", "--maxCharactersAllowed", required=True)
@@ -42,13 +42,13 @@ def create_object_annotation(root, voc_labels):
 
 DESTINATION_DIR = "/content/Yolo-digit-detector/YoloDatasetCreator/YoloDataset/lego-gubbar-detection/GeneratingDataset/GeneratedImagesXml"
 
-minBackgroundSize = args["minBackgroundSize"]
-maxBackgroundSize = args["maxBackgroundSize"]
-minSize = args["minSize"]
-maxSize = args["maxSize"]
-imageStart = args["imageStart"]
-itterations = args["itterations"]
-maxCharactersAllowed = args["maxCharactersAllowed"]
+minBackgroundSize = int(args["minBackgroundSize"])
+maxBackgroundSize = int(args["maxBackgroundSize"])
+minSize = int(args["minCharacterSize"])
+maxSize = int(args["maxCharacterSize"])
+imageStart = int(args["imageStart"])
+itterations = int(args["itterations"])
+maxCharactersAllowed = int(args["maxCharactersAllowed"])
 total = imageStart
 
 for i in range(itterations):
@@ -58,9 +58,9 @@ for i in range(itterations):
     imgBackground = cv2.cvtColor(cv2.imread(backgroundDir), cv2.COLOR_RGB2RGBA)
 
     try:
-        resizedBackground = cv2.resize(imgBackground, (random.randint(minBackgroundSize[0],maxBackgroundSize[0]),random.randint(minBackgroundSize[1],maxBackgroundSize[1])))
+        resizedBackground = cv2.resize(imgBackground, (random.randint(minBackgroundSize,maxBackgroundSize),random.randint(minBackgroundSize,maxBackgroundSize)))
     except:
-        resizedBackground = cv2.resize(imgBackground, minBackgroundSize)
+        resizedBackground = cv2.resize(imgBackground, (minBackgroundSize,minBackgroundSize))
 
     charactersAmount = random.randint(1,maxCharactersAllowed)
     for amounts in range(charactersAmount):
