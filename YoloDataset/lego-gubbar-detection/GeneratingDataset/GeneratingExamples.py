@@ -5,8 +5,6 @@ import random
 import numpy as np
 import xml.etree.cElementTree as ET
 
-### Darken/lighen photo -> Fixa backgroundremover -> Film to images cropped and background removed -> ?Koden till google colab?
-
 def create_root(file_prefix, width, height):
     root = ET.Element("annotations")
     ET.SubElement(root, "filename").text = "{}.JPEG".format(file_prefix)
@@ -37,7 +35,7 @@ backgroundShape = (224,224)
 minSize = 32
 maxSize = 112
 imageStart = 0
-itterations = 5000
+itterations = 10000
 maxCharactersAllowed = 5
 total = imageStart
 

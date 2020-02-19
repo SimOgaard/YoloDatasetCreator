@@ -21,7 +21,7 @@ cv2.createTrackbar('ERODE','filter',0,100,nothing)
 cv2.createTrackbar('BLUR','filter',3,100,nothing)
 cv2.createTrackbar('Kernel','filter',3,100,nothing)
 
-img = cv2.imread("Get Images/Images/uh.PNG")
+img = cv2.imread("Get Images/Images/xDDDD.PNG")
 
 # b,g,r = cv2.split(cv2.cvtColor(img, cv2.COLOR_BGR2HSV))
 # hist = cv2.calcHist([cv2.cvtColor(img, cv2.COLOR_BGR2HSV)], [0], None, [256], [0, 256])
