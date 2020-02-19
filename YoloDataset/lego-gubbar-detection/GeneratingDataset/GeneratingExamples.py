@@ -106,9 +106,9 @@ for i in range(itterations):
     tree = ET.ElementTree(root) 
     tree.write("{}/{}.xml".format(DESTINATION_DIR, file_prefix))
 
-    gauss = np.random.normal(0, random.randint(0,250)/1000,resizedBackground.size)
-    gauss = gauss.reshape(resizedBackground.shape[0], resizedBackground.shape[1], resizedBackground.shape[2]).astype('uint8')
-    noise = (resizedBackground + resizedBackground * gauss) # * (random.randint(10,50)/10000)
+    # gauss = np.random.normal(0, random.randint(0,250)/1000,resizedBackground.size)
+    # gauss = gauss.reshape(resizedBackground.shape[0], resizedBackground.shape[1], resizedBackground.shape[2]).astype('uint8')
+    # noise = (resizedBackground + resizedBackground * gauss) # * (random.randint(10,50)/10000)
 
     # cv2.imshow('noise', noise)
     # k = cv2.waitKey()
@@ -116,7 +116,7 @@ for i in range(itterations):
     #     break
 
     # cv2.imwrite("GeneratingDataset/GeneratedImages/"+"{}.JPEG".format(str(total).zfill(8)), resizedBackground)
-    cv2.imwrite("/content/Yolo-digit-detector/YoloDatasetCreator/YoloDataset/lego-gubbar-detection/GeneratingDataset/"+args["generatedImages"]+"/{}.JPEG".format(file_prefix), noise)
+    cv2.imwrite("/content/Yolo-digit-detector/YoloDatasetCreator/YoloDataset/lego-gubbar-detection/GeneratingDataset/"+args["generatedImages"]+"/{}.JPEG".format(file_prefix), resizedBackground)
     total+=1
 
 cv2.destroyAllWindows()
