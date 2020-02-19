@@ -14,8 +14,8 @@ ap.add_argument("-S", "--maxCharacterSize", required=True)
 ap.add_argument("-i", "--imageStart", required=True)
 ap.add_argument("-t", "--itterations", required=True)
 ap.add_argument("-c", "--maxCharactersAllowed", required=True)
-ap.add_argument("-d","generatedImagesXml", required=True)
-ap.add_argument("-D","generatedImages", required=True)
+ap.add_argument("-d", "--generatedImagesXml", required=True)
+ap.add_argument("-D", "--generatedImages", required=True)
 
 args = vars(ap.parse_args())
 
@@ -43,7 +43,7 @@ def create_object_annotation(root, voc_labels):
         ET.SubElement(bbox, "ymax").text = str(voc_label[4])
     return root
 
-DESTINATION_DIR = "/content/Yolo-digit-detector/YoloDatasetCreator/YoloDataset/lego-gubbar-detection/GeneratingDataset/+"args["generatedImagesXml"]
+DESTINATION_DIR = "/content/Yolo-digit-detector/YoloDatasetCreator/YoloDataset/lego-gubbar-detection/GeneratingDataset/"+args["generatedImagesXml"]
 
 minBackgroundSize = int(args["minBackgroundSize"])
 maxBackgroundSize = int(args["maxBackgroundSize"])
