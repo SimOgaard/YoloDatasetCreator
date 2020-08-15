@@ -1,2 +1,2 @@
 # outdated
-## [follow up work found here](github.com/abbsimoga/OpenMv/tree/master/OpenMV/YoloObjDetection)
+## [follow up work found here](https://github.com/abbsimoga/MDH-samarbetande-robotar/tree/master/OpenMV/YoloObjDetection/lego-gubbar-detection)
